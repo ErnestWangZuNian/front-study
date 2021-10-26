@@ -34,7 +34,6 @@ const createDom = (vdom) => {
 }
 const changVdomToRealdom = (vdom, container) => {
     const dom = createDom(vdom);
-    console.log(dom, container);
     container.appendChild(dom);
 }
 

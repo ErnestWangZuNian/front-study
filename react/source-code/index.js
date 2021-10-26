@@ -1,7 +1,5 @@
 import render from './react-dom/render';
-import createElement from './react-dom';
-console.log('22222222')
-
+import createElement from './create-element';
 window.onload = () => {
  
     render(createElement("div", {
@@ -9,5 +7,5 @@ window.onload = () => {
         style: {
             color: 'red'
         }
-    }, /*#__PURE__*/createElement("div", null, "22222")), document.getElementById('root'))
+    }, createElement("div", null, "22222"), createElement("div", null, "3333")), document.getElementById('root'))
 }
