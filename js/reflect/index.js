@@ -1,0 +1,1 @@
+Reflect.get(1, 'foo')

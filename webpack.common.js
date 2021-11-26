@@ -2,8 +2,10 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
-    entry: './index.js',
-    mode: 'development',
+    entry: {
+        reactSourceCode: path.resolve(__dirname, 'react/source-code/index.js'),
+        js: path.resolve(__dirname, 'js/index.js'),
+    },
     plugins: [
         new HtmlWebpackPlugin({
             title: 'Development',
@@ -16,9 +18,6 @@ module.exports = {
   `
         })
     ],
-    devServer: {
-        port: '8000'
-    },
     output: {
         filename: '[name].bundle.js',
         path: path.resolve(__dirname, 'dist')
