@@ -12,7 +12,7 @@ module.exports = {
             templateContent: `
     <html>
       <body>
-        <div id="root">Hello World</div>
+        <div id="root">Hello World11</div>
       </body>
     </html>
   `
