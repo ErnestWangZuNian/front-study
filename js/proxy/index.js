@@ -1,4 +1,4 @@
-//  数据劫持 Object.defineProperty 
+//  数据劫持 Object.defineProperty   改变原数组的方法不会出发set  要循环遍历key   嵌套需要递归调用
 
 let arr = [1, 2, 3];
 const obj = {};
