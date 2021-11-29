@@ -119,7 +119,6 @@ const getReactiveData = function (
     if (typeof data === 'object') {
         Object.keys(data).forEach(key => {
             let currentValue = data[key];
-            console.log(currentValue, 'currentValue');
             const dep = new Dep();
             Object.defineProperty(data, key, {
                 get() {
@@ -190,4 +189,6 @@ var vm = new MVVM({
 
 setTimeout(() => {
     vm.$data.name = '小张'
+    vm.$data.age = '27'
+    vm.$data.baseInfo.career = '会计'
 }, 5000)
