@@ -8,14 +8,8 @@ module.exports = {
     },
     plugins: [
         new HtmlWebpackPlugin({
-            title: 'Development',
-            templateContent: `
-    <html>
-      <body>
-        <div id="root">Hello World11</div>
-      </body>
-    </html>
-  `
+            title: '数据绑定',
+            template: path.resolve(__dirname, 'index.html'),
         })
     ],
     output: {

@@ -7,6 +7,6 @@ window.onload = () => {
         style: {
             color: 'red'
         }
-    }, createElement("div", null, `window.name的值是${window.name}`), createElement("div", null, "3333")), document.getElementById('root'))
+    }, createElement("div", null, `window.name的值是${window.name}`), createElement("div", null, "3333")), document.getElementById('app'))
 
 }
