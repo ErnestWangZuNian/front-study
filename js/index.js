@@ -1,6 +1,6 @@
 // import "./reflect";
 // import  './call-apply-bind';
+// import './proxy';
 
-import test from './proxy';
 
-console.log(test);
+import  './throttle-shake';
