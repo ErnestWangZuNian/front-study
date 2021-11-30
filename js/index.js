@@ -3,4 +3,4 @@
 // import './proxy';
 
 
-import  './throttle-shake';
+import  './throttle-debounce';
