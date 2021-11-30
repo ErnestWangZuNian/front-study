@@ -70,11 +70,18 @@
 
 // export var test = '22222';
 
+let dId = 0;
 
-
+let watchId = 0;
 class Dep {
     constructor() {
         this.subs = [];
+        this.id = dId++;
+    }
+    depend() {
+        if (Dep.target) {
+            Dep.target.addDep(this);
+        }
     }
 
     addSub(sub) {
@@ -92,21 +99,51 @@ class Dep {
     }
 
 }
+
+
+let stack = [];
+
+let pushWatcherTarget = (watcher) => {
+    Dep.target = watcher;
+    stack.push(watcher)
+};
+
+let popWatherTarget = () => {
+    stack.pop();
+    Dep.target = stack[stack.length - 1]
+}
 class Watcher {
-    constructor(fn) {
-        this.watcherCallback = fn;
-        this.activeRun();
+    constructor(vm, exportfn, cb, options) {
+        this.vm = vm;
+        this.getter = exportfn || null;
+        this.cb = cb;
+        this.options = options;
+        this.id = watchId++;
+        this.deps = [];
+        this.depId = new Set();
+        this.value = this.activeRun();
     }
 
-    update() {
-        if (this.watcherCallback) {
-            this.watcherCallback()
+    addDep(dep) {
+        if (!this.depId.has(dep.id)) {
+            this.depId.add(dep.id);
+            this.deps.push(dep)
+            dep.addSub(this);
         }
     }
 
+    update() {
+        this.activeRun();
+    }
+
     activeRun() {
-        Dep.target = this;
-        this.watcherCallback();
+        const {
+            vm
+        } = this;
+        pushWatcherTarget(this);
+        const value = this.getter ? this.getter.call(vm, vm) : null;
+        popWatherTarget();
+        return value;
     }
 
 }
@@ -124,16 +161,14 @@ const getReactiveData = function (
                 get() {
                     console.log(Dep.target, `get_${key}`);
                     if (Dep.target) {
-                        dep.addSub(Dep.target)
+                        Dep.target.addDep(dep);
                     }
                     return currentValue;
                 },
                 set(newValue) {
                     console.log(`set_${key}_${newValue}`);
                     currentValue = newValue;
-                    if (Dep.target) {
-                        dep.notify();
-                    }
+                    dep.notify();
                 }
             })
             if (typeof currentValue === "object") {
@@ -155,7 +190,21 @@ class MVVM {
         this.originHTML = this.root.innerHTML;
         this.$data = JSON.parse(JSON.stringify(data));
         this.$data = getReactiveData(this.$data);
-        new Watcher(() => {
+
+        function proxy(vm, source, key) {
+            Object.defineProperty(vm, key, {
+                get() {
+                    return vm[source][key] // this.name 等同于  this._data.name
+                },
+                set(newValue) {
+                    return vm[source][key] = newValue
+                }
+            })
+        }
+        Object.keys(this.$data).forEach(key => {
+            proxy(this, '$data', key)
+        })
+        new Watcher(this, () => {
             var html = String(this.originHTML || '').replace(/"/g, '\\"').replace(/\s+|\r|\t|\n/g, ' ')
                 .replace(/\{\{(.)*?\}\}/g, function (value) {
                     return value.replace("{{", '"+(').replace("}}", ')+"');
@@ -188,7 +237,7 @@ var vm = new MVVM({
 
 
 setTimeout(() => {
-    vm.$data.name = '小张'
-    vm.$data.age = '27'
-    vm.$data.baseInfo.career = '会计'
+    vm.name = '小张'
+    vm.age = '27'
+    vm.baseInfo.career = '会计'
 }, 5000)
