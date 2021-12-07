@@ -44,12 +44,19 @@ document.querySelector('#input').oninput = _.debounce((e) => {
     'maxWait': 100000
 });
 
-document.querySelector('.btn').onclick = debounce(() => {
-    console.log('我特么被点击了')
-}, {
-    immediate: true,
-    wait: 2000,
-});
+const p1 = () => {
+    const test = new Promise((resolve) => {
+        setTimeout(() => {
+            resolve('ok')
+        }, 2000)
+    });
+    return test;
+}
+
+document.querySelector('.btn').onclick = async () => {
+    await p1();
+    window.print();
+}
 
 // document.querySelector('.btn').onclick = _.debounce(() => {
 //     console.log('我特么被点击了_')
