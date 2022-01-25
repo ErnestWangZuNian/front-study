@@ -3,4 +3,4 @@ import  './call-apply-bind';
 // import './proxy';
 
 
-// import  './throttle-shake';
+import  './throttle-debounce';

@@ -21,6 +21,7 @@
   "dependencies": {
     "clean-webpack-plugin": "^4.0.0",
     "html-webpack-plugin": "^5.5.0",
+    "loadsh": "^0.0.4",
     "webpack-merge": "^5.8.0"
   }
 }
