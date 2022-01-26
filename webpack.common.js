@@ -3,8 +3,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
     entry: {
-        reactSourceCode: path.resolve(__dirname, 'react/source-code/index.js'),
-        js: path.resolve(__dirname, 'js/index.js'),
+        mvvm: path.resolve(__dirname, 'mvvm/index.js'),
+        // js: path.resolve(__dirname, 'js/index.js'),
     },
     plugins: [
         new HtmlWebpackPlugin({
