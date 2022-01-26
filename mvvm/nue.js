@@ -26,7 +26,12 @@ class Nue {
             })
         });
 
-         this.relation.student.dx = '测试';
+
+
+        setTimeout(() => {
+            this.relation.student.dx = '测试';
+            this.name = '小张';
+        }, 2000)
 
         new Compile(this);
     }

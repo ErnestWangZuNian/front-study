@@ -1,5 +1,8 @@
 import _ from 'lodash';
 
+import Dep from './Dep';
+
+
 class Observe {
     constructor(data) {
         this.data = this.observe(data);
@@ -7,19 +10,29 @@ class Observe {
 
     observe(data) {
         let newData = _.cloneDeep(data);
+        let dep = new Dep();
         if (_.isObject(data)) {
             Object.keys(data).forEach(key => {
+                let val = data[key];
+                if (_.isObject(val)) {
+                    val = this.observe(val);
+                }
                 Object.defineProperty(newData, key, {
                     enumerable: true,
                     configurable: true,
                     get: () => {
-                        if (_.isObject(data[key])) {
-                            data[key] = this.observe(data[key]);
+                        if (Dep.target) {
+                            dep.addSub(Dep.target);
                         }
-                        return data[key]
+                        return val;
                     },
                     set: (newVal) => {
-                        data[key] = newVal;
+                        if (!_.isEqual(newVal, val)) {
+                            newVal = this.observe(newVal);
+                            val = newVal;
+                            dep.notify();
+                        }
+
                     }
                 })
             });

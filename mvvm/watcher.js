@@ -1,12 +1,34 @@
-class Watcher {
-    constructor(data, fn) {
-        this.fn = fn;
-        this.data = data;
+import Dep from './Dep';
 
-    };
+class Watcher {
+    constructor(vm, property, fn) {
+        console.log(property, 'property');
+        this.fn = fn;
+        this.property = property;
+        this.vm = vm;
+        let val = this.vm;
+        let matchRes = this.property;
+        Dep.target = this;
+        if (matchRes) {
+            matchRes = matchRes.split('.');
+            matchRes.forEach(item => {
+                val = val[item];
+            })
+        };
+        Dep.target = null;
+    }
 
     update() {
-        console.log(this.data, '更新');
+        let matchRes = this.property;
+        let val = this.vm;
+        if (matchRes) {
+            matchRes = matchRes.split('.');
+            matchRes.forEach(item => {
+                val = val[item];
+            })
+        };
+        this.fn(val);
+        
     }
 };
 

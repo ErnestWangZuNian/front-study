@@ -1,7 +1,10 @@
 import _ from 'lodash';
 
+import Watcher from './Watcher';
+
 class Compile {
     constructor(vm) {
+
         const rootContainer = document.querySelector(vm.$el);
         let child = rootContainer.firstChild;
         while (child !== rootContainer.lastChild) {
@@ -17,8 +20,13 @@ class Compile {
                     })
                 }
 
+                new Watcher(vm, RegExp.$1, function (newVal) {
+                    console.log(RegExp.$1, newVal, '我是更新的newVal');
+                    console.log(textContent, 'textContent');
+                });
+
                 textContent = textContent.replace(re, val);
-                
+
                 child.textContent = textContent;
             }
             child = child.nextSibling;
