@@ -5,6 +5,7 @@ new Nue({
     data: {
         name: '小王',
         age: '27',
+        interest: ['basketball'],
         relation: {
             student: {
                 dx: '大学',

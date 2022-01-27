@@ -29,12 +29,13 @@ class Nue {
 
 
         setTimeout(() => {
-            this.relation.student.dx = '测试';
-            this.name = '小张';
+            this.name = '小张'
         }, 2000)
 
         new Compile(this);
     }
 };
+
+
 
 export default Nue;

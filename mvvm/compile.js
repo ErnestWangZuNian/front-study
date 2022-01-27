@@ -21,8 +21,9 @@ class Compile {
                 }
 
                 new Watcher(vm, RegExp.$1, function (newVal) {
-                    console.log(RegExp.$1, newVal, '我是更新的newVal');
-                    console.log(textContent, 'textContent');
+                    if (newVal !== val) {
+                        console.log(newVal, '我是更新的newVal');
+                    }
                 });
 
                 textContent = textContent.replace(re, val);

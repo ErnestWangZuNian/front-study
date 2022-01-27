@@ -10,7 +10,7 @@ class Dep {
     }
 
     notify() {
-        console.log(this.subs, 'subs-222');
+        console.log(this.subs, 'subs-3333');
         this.subs.forEach(sub => sub.update());
     }
 
